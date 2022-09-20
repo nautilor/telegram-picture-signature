@@ -9,4 +9,4 @@ SIGNATURE = environ.get("SIGNATURE", "")
 PICTURE_OUTPUT = "output/out.png"
 DATE_FORMAT = "%Y/%m/%d %H:%M:%S"
 FONT_LOCATION = "font/JetBrains.ttf"
-FONT_SIZE = 15
+FONT_SIZE = 40
