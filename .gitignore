@@ -1,0 +1,10 @@
+.vscode/
+*build*
+*.pyc*
+*.log*
+.env.json
+.deploy.json
+*.png
+*.jpg
+*.jpeg
+__test__.py
