@@ -6,6 +6,8 @@ from root.constant.constant import (
     DATE_FORMAT,
     FONT_LOCATION,
     FONT_SIZE,
+    LOCKED_SINCE,
+    LOCKED_SINCE_FORMAT,
     PICTURE_OUTPUT,
     SIGNATURE,
     USER_ID,
@@ -19,12 +21,21 @@ def format_date():
     return "Date: %s" % datetime.now().strftime(DATE_FORMAT)
 
 
+def calculate_days():
+    date: datetime = datetime.strptime(LOCKED_SINCE, LOCKED_SINCE_FORMAT)
+    days: int = (datetime.now() - date).days
+    if days < 2:
+        return f"\nLocked for: {days} day"
+    else:
+        return f"\nLocked for: {days} days"
+
+
 def add_signature_to_picture():
     try:
         image: Image = Image.open(PICTURE_OUTPUT)
         draw: ImageDraw = ImageDraw.Draw(image)
         font: ImageFont = ImageFont.truetype(FONT_LOCATION, FONT_SIZE)
-        signature: str = format_date() + SIGNATURE
+        signature: str = format_date() + calculate_days() + SIGNATURE
         hadjustment = len(signature.split("\n"))
         height = image.height - ((FONT_SIZE * 2) * hadjustment) + (15 * hadjustment)
         draw.text((FONT_SIZE, height), signature, font=font, fill=(255, 255, 255))
@@ -48,7 +59,7 @@ def handle_image(update: Update, context: CallbackContext):
         file: File = document.get_file()
         file.download(PICTURE_OUTPUT)
     except Exception:
-        errors.append("UNable to download picture")
+        errors.append("Unable to download picture")
     errors.append(add_signature_to_picture())
     try:
         update.effective_message.reply_document(open(PICTURE_OUTPUT, "rb"))
