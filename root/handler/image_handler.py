@@ -52,7 +52,7 @@ def handle_image(update: Update, context: CallbackContext):
         file: File = document.get_file()
         file.download(PICTURE_OUTPUT)
     except Exception:
-        errors.append("UNable to download picture")
+        errors.append("Unable to download picture")
     errors.append(add_signature_to_picture())
     try:
         update.effective_message.reply_document(open(PICTURE_OUTPUT, "rb"))
