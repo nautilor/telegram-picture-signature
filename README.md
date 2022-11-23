@@ -1,7 +1,7 @@
 # Telegram picture sign
 
 
-Add custom text to the bottom left corner of the picture
+Add custom text to the bottom right corner of the picture
 
 # TODO:
 

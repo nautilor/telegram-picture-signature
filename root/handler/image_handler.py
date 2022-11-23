@@ -22,12 +22,16 @@ def format_date():
 def add_signature_to_picture():
     try:
         image: Image = Image.open(PICTURE_OUTPUT)
+        width, height = image.size
         draw: ImageDraw = ImageDraw.Draw(image)
         font: ImageFont = ImageFont.truetype(FONT_LOCATION, FONT_SIZE)
         signature: str = format_date() + SIGNATURE
-        hadjustment = len(signature.split("\n"))
-        height = image.height - ((FONT_SIZE * 2) * hadjustment) + (15 * hadjustment)
-        draw.text((FONT_SIZE, height), signature, font=font, fill=(255, 255, 255))
+        textwidth, textheight = draw.textsize(signature, font)
+        # calculate the x,y coordinates of the text
+        margin = 10
+        x = width - textwidth - margin
+        y = height - textheight - margin
+        draw.text((x, y), signature, font=font, fill=(255, 255, 255))
         image.save(PICTURE_OUTPUT)
     except Exception:
         return "Unable to add signature to picture"
